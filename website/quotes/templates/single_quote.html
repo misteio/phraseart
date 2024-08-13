@@ -1,0 +1,269 @@
+{% extends 'theme/base.html' %}
+{% load static %}
+
+{% block 'header' %}
+    <meta name="description" content="Citation de {{ quote.author }} sur les thèmes {{ quote.tag_primary.name }},{% for tag in quote.tags.all %},{{ tag.name }}{% endfor %}">
+    <meta name="keywords" content="citation,{{ quote.author.name }},{% for tag in quote.tags.all %},{{ tag.name }}{% endfor %}">
+    <meta name="author" content="Phraseart">
+    <title>{{ quote.author.name }} | {{ quote.title }}</title>
+    <meta property="og:description" content="Citation de {{ quote.author }} sur les thèmes {{ quote.tag_primary.name }},{% for tag in quote.tags.all %},{{ tag.name }}{% endfor %}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ quote.author.name }} | {{ quote.title }}">
+    <meta property="og:image" content="{{ quote.image_square.url }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
+    <meta property="og:updated_time" content="{{ quote.updated_at|date:'c' }}">
+    <meta property="og:site_name" content="Phraseart : L'ordre des mots dans une phrase est art">
+    <meta property="article:publisher" content="https://www.facebook.com/Phraseart-107583934183716">
+    <meta property="article:section" content="{{ quote.author }}">
+    <meta property="article:published_time" content="{{ quote.created_at|date:'c' }}">
+    <meta property="article:modified_time" content="{{ quote.updated_at|date:'c' }}">
+{% endblock %}
+
+{% block 'body' %}
+    <!-- site-main -->
+    <div id="main" class="site-main"> <!-- .featured-top -->
+    <div class="featured-top">
+    <!-- .entry-header -->
+    <header class="entry-header">
+        <!-- .entry-meta -->
+        <div class="entry-meta">
+                    <span class="entry-date" style="width: 40%">
+                        <time class="entry-date"
+                              datetime="{{ quote.created_at|date:'c' }}">{{ quote.created_at }}</time>
+                    </span>
+            <span style="width: 55%; text-align: right"><a href="#download">Télécharger </a></span>
+        </div>
+        <!-- .entry-meta -->
+    </header>
+    <!-- .entry-header -->
+
+
+    <!-- .post-thumbnail -->
+    <div class="entry-content">
+        <div class="featured-top">
+
+            <img src="images/blog/02.jpg" alt="post-image">
+
+            <!-- .post-thumbnail -->
+            <div class="post-thumbnail" style="background-image:url({{ quote.file_image.file.url }})">
+
+                <!-- .entry-header -->
+                <header class="entry-header">
+                    <!-- .entry-meta -->
+
+                    <!-- .entry-meta -->
+
+                    <!-- .entry-title -->
+                    <h1 class="entry-title">{{ quote.body }}</h1>
+                    <div class="entry-meta">
+                            <span class="cat-links">
+                                <a href="#" title="View all posts in Travel" rel="category tag">{{ quote.author.name }}</a>
+                            </span>
+                    </div>
+                    <!-- .entry-meta -->
+                </header>
+                <!-- .entry-header -->
+            </div>
+            <!-- .post-thumbnail -->
+        </div>
+        <div class="layout-medium">
+            <div id="primary" class="content-area">
+                <!-- site-content -->
+                <div id="content" class="site-content" role="main"> <!-- .hentry -->
+                    <article class="hentry post single-post">
+
+
+                        <!-- .entry-content -->
+                        <div class="entry-content">
+                            {{ quote.analyze | safe }}
+
+                        </div>
+                        <!-- .entry-content -->
+
+                    </article>
+                    <!-- .hentry -->
+                    <div class="post-tags tagcloud">
+                        {% for tag in quote.tags.all %}
+                            <a href="{% url 'quote_tag_list' tag_slug=tag.slug %}" rel="tag">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                    <!-- .post-tags -->
+
+
+                    <!-- .share-links -->
+                    <div class="share-links">
+                        Partager</i>
+
+                        <a rel="nofollow" target="_blank"
+                           href="mailto:?subject=Citation du jour : {{ quote.title }}&amp;body={{ quote.title }} %0D%0A {{ request.build_absolute_uri }}. %0D%0A%0D%0A https://phraseart.com"
+                           title="Partager par email"><i class="pw-icon-mail"></i></a>
+
+                        <a rel="nofollow" target="_blank"
+                           href="https://twitter.com/intent/tweet?text={{ quote.body }}{{ request.build_absolute_uri }}&hashtags=phraseart{% for tag in quote.tags.all %},{{ tag.name }}{% endfor %},{{ quote.author.slug }}"
+                           title="Partager sur Twitter"><i class="pw-icon-twitter"></i></a>
+
+                        <a rel="nofollow" target="_blank"
+                           href="http://www.facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ quote.title }}"
+                           title="Partager sur Facebook"><i class="pw-icon-facebook"></i></a>
+
+                        <a href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri }}&description={{ quote.title }}&media={{ quote.image_square.url }}"><i class="pw-icon-pinterest-circled"></i></a>
+                    </div>
+
+                    <!-- .share-links -->
+                    <!-- .nav-single -->
+                    <nav class="nav-single row">
+                        {% if previous_quote %}
+                            <div class="nav-previous col-xs-4">
+                                <h4> "Citation Précédente"</h4>
+                                <a style="max-width: 500px" href="{% url 'quote' slug=previous_quote.slug %}"
+                                   rel="prev">{{ previous_quote.title }}</a>
+                            </div>
+                        {% endif %}
+                        <div class="col-xs-4" style="text-align: center"><br/>
+                            <a style="max-width: 500px" href="{% url 'quote' slug=random_quote.slug %}"
+                               rel="next">Citation aléatoire</a>
+                        </div>
+                        {% if next_quote %}
+                            <div class="nav-next col-xs-4">
+                                <h4>Citation suivante</h4>
+                                <a style="max-width: 500px" href="{% url 'quote' slug=next_quote.slug %}"
+                                   rel="next">{{ next_quote.title }}</a>
+                            </div>
+                        {% endif %}
+
+                    </nav>
+                    <!-- .nav-single -->
+                    <aside class="about-author">
+
+                        <h3>Au sujet de l'auteur</h3>
+
+                        <!-- .author-bio -->
+                        <div class="author-bio">
+
+                            <!-- .author-img -->
+                            <div class="author-img">
+                                <a href="{% url 'quote_author_list' author_slug=quote.author.slug %}"><img alt="{{ quote.author_name }}" src="{{ quote.author.image.url }}" class="avatar"></a>
+                            </div>
+                            <!-- .author-img -->
+
+                            <!-- .author-info -->
+
+                            <div class="author-info">
+                                <h4 class="author-name"><a href="{% url 'quote_author_list' author_slug=quote.author.slug %}" title="voir tous les posts de {{ tag.name }}">{{ quote.author_name }}</a></h4>
+                                <p>{{ quote.author.bio | safe }}</p>
+                            </div>
+                            <!-- .author-info -->
+
+
+                        </div>
+                        <!-- .author-bio -->
+
+                    </aside>
+                </div>
+                <!-- site-content -->
+
+            </div>
+            <!-- primary -->
+
+        </div>
+
+        <!-- blockquote -->
+        <!-- .post-tags -->
+        <br/>
+
+
+
+
+        </div>
+        </div>
+        <!-- post-slider -->
+        <div class="post-slider owl-carousel" data-items="3" data-loop="true" data-center="true" data-mouse-drag="true"
+             data-nav="true" data-dots="false" data-autoplay="false" data-autoplay-speed="600"
+             data-autoplay-timeout="2000">
+
+
+            {% for random_quote in random_quotes %}
+                <!-- post -->
+                <div class="post-thumbnail" style="background-image:url({% get_media_prefix %}{{ random_quote.tag_primary.image_1000_667 }})">
+                    <!-- .entry-header -->
+                    <header class="entry-header">
+                        <!-- .entry-meta -->
+
+                        <div class="entry-meta">
+                <span class="cat-links">
+                    {% for tag in random_quote.tags.all %}
+                        <a href="{% url 'quote_tag_list' tag_slug=tag.slug %}" title="voir tous les posts de {{ tag.name }}" rel="category tag">{{ tag.name }}</a>
+                    {% endfor %}
+                </span>
+                        </div>
+
+                        <!-- .entry-meta -->
+                        <!-- .entry-title -->
+                        <h2 class="entry-title"><a
+                                href="{% url 'quote' category_slug=random_quote.category.slug slug=random_quote.slug %}">{{ random_quote.title }}
+                            ...</a>
+                        </h2>
+                        <p><a href="{% url 'quote' category_slug=random_quote.category.slug slug=random_quote.slug %}" class="more-link">Lire</a>
+                        </p>
+
+                    </header>
+                    <!-- .entry-header -->
+
+                </div>
+                <!-- post -->
+            {% endfor %}
+        </div>
+        <div class="featured-top" style="margin-top: 40px; text-align: center;" id="download">
+            <h3>Télécharger la citation</h3><br>
+            <!-- .row -->
+            <div class="row">
+                <!-- col 6/12 -->
+                <div class="col-sm-4">
+                    <!-- .alert -->
+                    <a href="{% url 'image_download' %}?quote_slug={{ quote.slug }}&format=image_square">
+                        <div class="alert" style="border: 2px solid #e1bc67;color:black">
+                            Format Carré
+                        </div>
+                    </a>
+                    <!-- .alert -->
+                </div>
+                <!-- col 6/12 -->
+
+                <!-- col 6/12 -->
+                <div class="col-sm-4">
+                    <!-- .alert success -->
+                    <a href="{% url 'image_download' %}?quote_slug={{ quote.slug }}&format=image_horizontal">
+                        <div class="alert success" style="color:black">
+                            Format Horizontal
+                        </div>
+                    </a>
+                    <!-- .alert success -->
+                </div>
+                <!-- col 6/12 -->
+                <!-- col 6/12 -->
+                <div class="col-sm-4">
+                    <!-- .alert error -->
+                    <a href="{% url 'image_download' %}?quote_slug={{ quote.slug }}&format=image_vertical">
+                        <div class="alert" style="border: 2px solid #73afdf;color:black">
+                            Format Vertical
+                        </div>
+                    </a>
+                    <!-- .alert error -->
+                </div>
+                <!-- col 6/12 -->
+            </div>
+        </div>
+        <!-- .row -->
+        <!-- post-slider -->
+        <div class="featured-top">
+
+
+        </div>
+    </div>
+    <!-- .featured-top -->
+{% endblock %}
+
+{% block 'bottom' %}
+    <script>
+    </script>
+{% endblock %}

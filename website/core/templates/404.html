@@ -1,0 +1,36 @@
+{% extends 'theme/base.html' %}
+{% load static %}
+
+{% block 'header' %}
+    <meta name="description" content="Phraseart - Erreur 404">
+    <meta name="keywords" content="citation,erreur,404">
+    <meta name="author" content="Phraseart">
+
+    <title>Erreur 404 </title>
+{% endblock %}
+{% block 'body' %}
+    <!-- site-main -->
+    <div id="main" class="site-main"> <!-- .featured-top -->
+        <div class="layout-medium">
+            <div id="primary" class="content-area">
+                <!-- site-content -->
+                <div id="content" class="site-content" role="main">
+                    <!-- entry-header -->
+                    <header class="entry-header">
+                        <h1 class="entry-title" style="text-align: center; font-size: 24px;">Vous vous êtes perdu !</h1>
+                    </header>
+                    <!-- entry-header -->
+
+                    <!-- BLOG LIST -->
+
+                    <!-- BLOG CREATIVE -->
+                </div>
+                {% include "theme/search.html" %}
+                <!-- site-content -->
+            </div>
+            <!-- primary -->
+        </div>
+        <!-- layout -->
+    </div>
+    <!-- site-main -->
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'theme/base.html' %}
+{% load static %}
+
+{% block 'header' %}
+    <meta name="description" content="Phraseart - Erreur 500">
+    <meta name="keywords" content="citation,erreur,500">
+    <meta name="author" content="Phraseart">
+
+    <title>Erreur 500 </title>
+{% endblock %}
+{% block 'body' %}
+    <!-- site-main -->
+    <div id="main" class="site-main"> <!-- .featured-top -->
+        <div class="layout-medium">
+            <div id="primary" class="content-area">
+                <!-- site-content -->
+                <div id="content" class="site-content" role="main">
+                    <!-- entry-header -->
+                    <header class="entry-header">
+                        <h1 class="entry-title" style="text-align: center; font-size: 24px;">Désolé ! Une erreur est survenu.</h1>
+                    </header>
+                    <div> Pas de panique ! Vous pouvez revenir à l'accueil ou retenter votre action.</div>
+                    <!-- entry-header -->
+                    <!-- BLOG LIST -->
+                    <!-- BLOG CREATIVE -->
+                </div>
+                <!-- site-content -->
+                {% include "theme/search.html" %}
+            </div>
+            <!-- primary -->
+        </div>
+
+
+        <!-- layout -->
+    </div>
+    <!-- site-main -->
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'theme/base.html' %}
+{% load static %}
+{% load i18n %}
+<!-- page -->
+{% block 'header' %}
+    <meta name="description" content="Vous trouverez sur ce site des citations triées dans 5 grandes catégories. Libre, proverbe, film, parole et livre. Il est bien entendu possible que vous en proposiez vous même afin d'enrichir notre site.">
+    <meta name="keywords"
+          content="citations,index,auteurs,film,proverbe,musique,parole,artiste,mot,phrase,quote,art">
+    <meta name="author" content="Phraseart">
+    <title>L'ordre des mots dans une phrase est art.</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="l'ordre des mots dans une phrase est art">
+    <meta property="og:description" content="l'ordre des mots dans une phrase est art">
+
+    <meta property="og:image"
+          content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static "images/site/index/writer_pen.jpg" %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
+    <meta property="og:site_name" content="Phraseart">
+    <meta property="article:publisher" content="https://www.facebook.com/Phraseart-107583934183716">
+    <meta property="article:section" content="Phraseart">
+{% endblock %}
+{% block 'body' %}
+    {% get_current_language as LANGUAGE_CODE %}
+    {% get_language_info for LANGUAGE_CODE as lang %}
+
+
+    <!-- site-main -->
+    <div id="main" class="site-main">
+        <div class="layout-medium">
+            <div id="primary" class="content-area">
+                <!-- site-content -->
+                <div id="content" class="site-content" role="main"> <!-- .hentry -->
+                    <article class="hentry page">
+                        <!-- .entry-content -->
+                        <div class="entry-content intro" data-animation="rotate-1">
+                            <!-- .profile-image -->
+                            <div class="profile-image">
+                                <img alt="profile" src="{% static "images/site/index/writer_pen.jpg" %}"/>
+                            </div>
+                            <!-- .profile-image -->
+                            <h2><em>Phraseart</em></h2>
+                            <h3>L'ordre des mots dans une <br/><b>phrase est art</b></h3>
+                            <!-- .link-boxes -->
+                            <figure>
+                                <a href=""><img src=""
+                                                                                            alt="Citation"></a>
+                                <figcaption class="wp-caption-text">Citation</figcaption>
+                            </figure>
+
+                            <figure>
+                                <a href=""><img src=""
+                                                                                              alt="Parole"></a>
+                                <figcaption class="wp-caption-text">Parole</figcaption>
+                            </figure>
+
+                            <figure>
+                                <a href=""><img src="{% static "images/site/index/books.jpg" %}" alt="Livre"></a>
+                                <figcaption class="wp-caption-text">Livre</figcaption>
+                            </figure>
+
+                            <figure>
+                                <a href=""><img
+                                        src=""
+                                        alt="Proverbe"></a>
+                                <figcaption class="wp-caption-text">Proverbe</figcaption>
+                            </figure>
+                            <!-- .link-boxes -->
+                        </div>
+                        <!-- .entry-content -->
+                    </article>
+                    <!-- .page -->
+                    <!-- .home-title -->
+                    <h3 class="widget-title home-title">{% trans "Last Adds" %}</h3>
+
+                    <!-- BLOG SIMPLE -->
+                    <div class="blog-simple">
+                        {% for quote in quotes %}
+                            <!-- .hentry -->
+                            <article class="hentry post has-post-thumbnail">
+                                <!-- .hentry-left -->
+                                <div class="hentry-left">
+                                    <div class="entry-date">
+                                        <span class="day">{{ quote.created_at|date:'d'}}</span>
+                                        <span class="month">{{ quote.created_at|date:'b'}}</span>
+                                    </div>
+                                    <div class="featured-image" style="background-image:url({% get_media_prefix %}{{ quote.tag_primary.image_280_280 }})"></div>
+                                </div>
+                                <!-- .hentry-left -->
+                                <!-- .hentry-middle -->
+                                <div class="hentry-middle">
+                                    <!-- .entry-title -->
+                                    <h2 class="entry-title"><a href="{% url 'quote' slug=quote.slug %}">{{ quote.title }}</h2>
+                                    <div>{{ quote.author.name }}</div>
+                                </div>
+                                <!-- .hentry-middle -->
+                                <a class="post-link" href="{% url 'quote' slug=quote.slug %}"></a>
+                            </article>
+                            <!-- .hentry -->
+                        {% endfor %}
+                    </div>
+                    <!-- BLOG SIMPLE -->
+                    <!-- .home-launch -->
+                    <div class="home-launch">
+                        <a class="button" href="">Voir toutes les citations</a>
+                    </div>
+                    <!-- .home-launch -->
+                </div>
+                <!-- site-content -->
+            </div>
+            <!-- primary -->
+        </div>
+        <!-- layout -->
+    </div>
+    <!-- site-main -->
+{% endblock %}
