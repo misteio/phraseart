@@ -70,9 +70,6 @@ def author_list(request, author_slug, template='category_list.html', page_templa
 @require_http_methods(["GET", "POST"])
 def all_quotes(request, template='category_list.html', page_template='quote_list_page.html'):
     skip = 0
-    if request.is_ajax():
-        template = page_template
-        skip = (int(request.GET["page"]) -1) * 10
     context = {
         'quotes': get_list_or_404(Quote.objects.order_by('-created_at')[skip:10+skip]),
         'category': None,

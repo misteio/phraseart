@@ -1,0 +1,13 @@
+{% load static %}
+
+{% for quote in last_quotes %}
+    <li>
+        <a href="{% url 'quote' slug=quote.slug %}" class="tptn_link">
+            <img src="{{ quote.file_image.file_thumbnail_550_550.url }}" alt="post-image" class="tptn_thumb">
+        </a>
+        <span class="tptn_after_thumb">
+            <a href="{% url 'quote' slug=quote.slug %}" class="tptn_link"><span class="tptn_title">{{quote.title}}</span></a>
+            <span class="tptn_date">{{ quote.created_at }}</span>
+        </span>
+    </li>
+{% endfor %}

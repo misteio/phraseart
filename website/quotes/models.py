@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.text import slugify
 from imagekit.models import ProcessedImageField
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill, SmartCrop, ResizeToFit
+from imagekit.processors import ResizeToFill
 import uuid
 from django.urls import reverse
 from django_random_queryset import RandomManager
@@ -22,7 +22,7 @@ class Author(Timestamped):
     # Managers
     objects = models.Manager()  # The default manager.
     image = ProcessedImageField(blank=True, upload_to='images/bio/',
-                                processors=[ResizeToFit(500, 500)],
+                                processors=[ResizeToFill(500, 500)],
                                 format='JPEG',
                                 options={'quality': 90})
 

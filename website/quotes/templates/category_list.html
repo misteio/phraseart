@@ -1,0 +1,62 @@
+{% extends 'theme/base.html' %}
+{% load static %}
+
+{% block 'header' %}
+    <meta name="description" content="Phraseart - {{ title }}">
+    <meta name="keywords" content="citation,recherche">
+    <meta name="author" content="Phraseart">
+
+    <title>{{ title }} </title>
+{% endblock %}
+{% block 'body' %}
+    <!-- site-main -->
+    <div id="main" class="site-main"> <!-- .featured-top -->
+        <div class="layout-medium">
+            <div id="primary" class="content-area">
+                <!-- site-content -->
+                <div id="content" class="site-content" role="main">
+                    <article class="hentry post single-post">
+                        <!-- entry-header -->
+
+                        <div class="author-img" style="max-width: fit-content;margin-inline: auto; width: 100px; float: none; margin-top: 10px">
+                            <img alt="{{ author.name }}" src="{{ author.image.url }}" class="avatar">
+                        </div>
+
+                        <header class="entry-header">
+                            <div class="entry-meta">
+
+                                        <span class="cat-links">
+
+                                            <a href="#" title="View all posts in Travel" rel="category tag">{{ title }}</a>
+                                        </span>
+
+                                <span class="entry-date">
+
+                                        </span>
+                                <span class="comment-link">
+                                            <a href="#comments">4 Résultats</a>
+                                        </span>
+                            </div>
+                        </header>
+                        <!-- entry-header -->
+
+                        <!-- BLOG LIST -->
+                        <div id="streamquote" class="blog-creative blog-stream">
+                            {% include "quote_list_page.html" %}
+                        </div>
+
+                    </article>
+                    <!-- BLOG CREATIVE -->
+                </div>
+                <!-- site-content -->
+            </div>
+            <!-- primary -->
+        </div>
+        <!-- layout -->
+    </div>
+    <!-- site-main -->
+{% endblock %}
+
+{% block 'bottom' %}
+
+{% endblock %}

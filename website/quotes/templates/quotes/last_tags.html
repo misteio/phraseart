@@ -1,0 +1,9 @@
+{% load static %}
+
+{% for tag in last_tags %}
+    <li>
+        <a href="{% url 'quote_tag_list' tag_slug=tag.slug %}" class="tptn_link">
+            #{{ tag.name }}
+        </a>
+    </li>
+{% endfor %}

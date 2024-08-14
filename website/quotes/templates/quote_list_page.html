@@ -1,0 +1,54 @@
+{% load static %}
+
+
+{% for quote in quotes %}
+    <!-- .hentry -->
+    <article class="hentry post has-post-thumbnail">
+        <div class="post-thumbnail post-img" style="background-image:url({{ quote.file_image.file_thumbnail_550_550.url }})">
+            <a href="{% url 'quote' slug=quote.slug %}">{{ quote.title }} ...</a>
+            <!-- .entry-header -->
+            <header class="entry-header">
+
+                <!-- .entry-meta -->
+                <div class="entry-meta">
+                    <span class="entry-date">
+                        <time class="entry-date"
+                              datetime="{{ quote.created_at|date:'c' }}">{{ quote.created_at }}</time>
+                    </span>
+                    <span class="comment-link">
+                        <a href="#comments"></a>
+                    </span>
+                </div>
+                <!-- .entry-meta -->
+            </header>
+            <!-- .entry-header -->
+        </div>
+        <div class="post-thumbnail post-desc">
+
+            <!-- .entry-header -->
+            <header class="entry-header">
+
+                <!-- .entry-meta -->
+                <div class="entry-meta">
+                    <span class="cat-links">
+                        <a href="#" title="Voir toutes les citations dans {{ quote.tag_primary.name }}" rel="category tag">{{ quote.tag_primary.name }}</a>
+                    </span>
+                </div>
+                <!-- .entry-meta -->
+
+                <!-- .entry-title -->
+                <h2 class="entry-title"><a href="{% url 'quote' slug=quote.slug %}">{{ quote.title }}
+                    ...</a>
+                </h2>
+
+                <p><a href="{% url 'quote' slug=quote.slug %}" class="more-link">Lire</a></p>
+
+            </header>
+            <!-- .entry-header -->
+
+        </div>
+
+    </article>
+    <!-- .hentry -->
+{% endfor %}
+
