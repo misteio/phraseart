@@ -3,10 +3,11 @@ from core.mixins import Timestamped
 from django.db import models
 from django.utils.text import slugify
 from imagekit.models import ProcessedImageField
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill, SmartCrop, ResizeToFit
 import uuid
 from django.urls import reverse
 from django_random_queryset import RandomManager
-from imagekit.processors import ResizeToFit
 from django.utils.html import format_html
 from io import BytesIO
 from .utils import create_image_from_text
@@ -41,9 +42,15 @@ class Author(Timestamped):
 
 class FileImage(Timestamped):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
-    file = ProcessedImageField(blank=True, upload_to='images/%Y/%m/%d/', processors=[ResizeToFit(2000, 2000)],
-                               format='JPEG',
-                               options={'quality': 90})
+    file = models.ImageField(blank=True, upload_to='images/%Y/%m/%d/')
+    file_thumbnail_1440_960 = ImageSpecField(source='file',
+                                          processors=[ResizeToFill(1440, 960)],
+                                          format='JPEG',
+                                          options={'quality': 90})
+    file_thumbnail_550_550 = ImageSpecField(source='file',
+                                             processors=[ResizeToFill(550, 550)],
+                                             format='JPEG',
+                                             options={'quality': 90})
     # Managers
     objects = models.Manager()  # The default manager.
 

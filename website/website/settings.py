@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'pipeline',
     'storages',
     'imagekit',
+    'django_opensearch_dsl',
     'core',
     'quotes',
     'unfold.contrib.forms'
@@ -244,12 +245,11 @@ FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
 ]
 
-ELASTICSEARCH_DSL={
+OPENSEARCH_DSL={
     'default': {
         'hosts': config('ELASTIC_HOST'),
         'http_auth': [config('ELASTIC_USER'), config('ELASTIC_PASSWORD')],
         'scheme': 'https',
         'port': 443
-
     },
 }

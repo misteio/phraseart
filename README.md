@@ -16,3 +16,11 @@ pip install -r requirements.txt
 
 
 python manage.py migrate
+
+
+Opensearch:
+Create index
+python manage.py opensearch index create
+
+Index Docs:
+python manage.py opensearch document index

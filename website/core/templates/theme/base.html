@@ -1,5 +1,8 @@
 {% load static %}
 {% load pipeline %}
+{% load last_quotes %}
+{% load last_tags %}
+
 <!doctype html>
 
 <html lang="en"
@@ -85,7 +88,7 @@
                             <h3 class="widget-title">Derniers Mots-clés</h3>
                             <div class="tptn_posts tptn_posts_widget">
                                 <ul>
-
+                                    {% show_last_tags %}
                                 </ul>
                             </div>
                         </aside>
@@ -97,7 +100,7 @@
                             <h3 class="widget-title">Dernières Citations</h3>
                             <div class="tptn_posts tptn_posts_widget">
                                 <ul>
-
+                                    {% show_last_quotes %}
                                 </ul>
                             </div>
                         </aside>

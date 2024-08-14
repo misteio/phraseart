@@ -1,5 +1,7 @@
 {% extends 'theme/base.html' %}
 {% load static %}
+{% load imagekit %}
+
 
 {% block 'header' %}
     <meta name="description" content="Citation de {{ quote.author }} sur les thèmes {{ quote.tag_primary.name }},{% for tag in quote.tags.all %},{{ tag.name }}{% endfor %}">
@@ -45,14 +47,11 @@
             <img src="images/blog/02.jpg" alt="post-image">
 
             <!-- .post-thumbnail -->
-            <div class="post-thumbnail" style="background-image:url({{ quote.file_image.file.url }})">
+            <div class="post-thumbnail" style="background-image:url({{ quote.file_image.file_thumbnail_1440_960.url }}) ">
 
                 <!-- .entry-header -->
                 <header class="entry-header">
                     <!-- .entry-meta -->
-
-                    <!-- .entry-meta -->
-
                     <!-- .entry-title -->
                     <h1 class="entry-title">{{ quote.body }}</h1>
                     <div class="entry-meta">
@@ -69,26 +68,27 @@
         <div class="layout-medium">
             <div id="primary" class="content-area">
                 <!-- site-content -->
+                <div class="post-tags tagcloud">
+                    {% for tag in quote.tags.all %}
+                        <a href="{% url 'quote_tag_list' tag_slug=tag.slug %}" rel="tag">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+                <blockquote class="selectionShareable">"{{ quote.body }}"
+                    <cite>{{ quote.author_name }}</cite>
+                </blockquote>
+                <hr>
                 <div id="content" class="site-content" role="main"> <!-- .hentry -->
+                    <h2>Analyse de la citation</h2>
                     <article class="hentry post single-post">
-
-
                         <!-- .entry-content -->
                         <div class="entry-content">
                             {{ quote.analyze | safe }}
-
                         </div>
                         <!-- .entry-content -->
-
                     </article>
                     <!-- .hentry -->
-                    <div class="post-tags tagcloud">
-                        {% for tag in quote.tags.all %}
-                            <a href="{% url 'quote_tag_list' tag_slug=tag.slug %}" rel="tag">{{ tag.name }}</a>
-                        {% endfor %}
-                    </div>
-                    <!-- .post-tags -->
 
+                    <!-- .post-tags -->
 
                     <!-- .share-links -->
                     <div class="share-links">
@@ -220,7 +220,7 @@
                 <!-- col 6/12 -->
                 <div class="col-sm-4">
                     <!-- .alert -->
-                    <a href="{% url 'image_download' %}?quote_slug={{ quote.slug }}&format=image_square">
+                    <a href="{{ quote.image_square.url }}" target="_blank">
                         <div class="alert" style="border: 2px solid #e1bc67;color:black">
                             Format Carré
                         </div>
@@ -232,7 +232,7 @@
                 <!-- col 6/12 -->
                 <div class="col-sm-4">
                     <!-- .alert success -->
-                    <a href="{% url 'image_download' %}?quote_slug={{ quote.slug }}&format=image_horizontal">
+                    <a href="{{ quote.image_horizontal.url }}" target="_blank">
                         <div class="alert success" style="color:black">
                             Format Horizontal
                         </div>
@@ -243,7 +243,7 @@
                 <!-- col 6/12 -->
                 <div class="col-sm-4">
                     <!-- .alert error -->
-                    <a href="{% url 'image_download' %}?quote_slug={{ quote.slug }}&format=image_vertical">
+                    <a href="{{ quote.image_vertical.url }}" target="_blank">
                         <div class="alert" style="border: 2px solid #73afdf;color:black">
                             Format Vertical
                         </div>

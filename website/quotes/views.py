@@ -43,9 +43,6 @@ def quote(request, slug):
 def tag_list(request, tag_slug, template='category_list.html', page_template='quote_list_page.html'):
     tag = Tag.objects.filter(slug__exact=tag_slug).first()
     skip = 0
-    if request.is_ajax():
-        template = page_template
-        skip = (int(request.GET["page"]) -1) * 10
     context = {
         'quotes': get_list_or_404(Quote.objects.filter(tags__slug__exact=tag_slug).order_by('-created_at')[skip:10+skip]),
         'tag': tag,
@@ -60,9 +57,6 @@ def tag_list(request, tag_slug, template='category_list.html', page_template='qu
 def author_list(request, author_slug, template='category_list.html', page_template='quote_list_page.html'):
     author = Author.objects.filter(slug__exact=author_slug).first()
     skip = 0
-    if request.is_ajax():
-        template = page_template
-        skip = (int(request.GET["page"]) -1) * 10
     context = {
         'quotes': get_list_or_404(Quote.objects.filter(author__slug__exact=author_slug).order_by('-created_at')[skip:10+skip]),
         'author': author,

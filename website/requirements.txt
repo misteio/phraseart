@@ -11,3 +11,4 @@ django-pipeline==3.1.0
 python-resize-image==1.1.20
 python-decouple==3.8
 psycopg2==2.9.9
+django_opensearch_dsl==0.6.2
