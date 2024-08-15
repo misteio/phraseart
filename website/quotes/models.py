@@ -43,11 +43,11 @@ class Author(Timestamped):
 class FileImage(Timestamped):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     file = models.ImageField(blank=True, upload_to='images/%Y/%m/%d/')
-    file_thumbnail_1440_960 = ImageSpecField(source='file',
+    file_thumbnail_1440_960 = ProcessedImageField(blank=True,upload_to='images/1440/%Y/%m/%d/',
                                           processors=[ResizeToFill(1440, 960)],
                                           format='JPEG',
                                           options={'quality': 90})
-    file_thumbnail_550_550 = ImageSpecField(source='file',
+    file_thumbnail_550_550 = ProcessedImageField(blank=True,upload_to='images/550/%Y/%m/%d/',
                                              processors=[ResizeToFill(550, 550)],
                                              format='JPEG',
                                              options={'quality': 90})

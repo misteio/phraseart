@@ -29,7 +29,7 @@ SECRET_KEY = 'g#*3w$wr-1xxd0diz9^gxemb19n^41sytxs&fye&^(6-cc^6+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "test.phraseart.org", "phraseart.org", "www.phraseart.org"]
 
 
 # Application definition
@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_browser_reload',
     'pipeline',
     'storages',
     'imagekit',
@@ -50,17 +49,19 @@ INSTALLED_APPS = [
     'core',
     'quotes',
     'unfold.contrib.forms'
-
 ]
 
 if settings.DEBUG:
     INSTALLED_APPS = [
-                         'debug_toolbar',
+                        'debug_toolbar',
+                        'django_browser_reload'
                      ] + INSTALLED_APPS
-
-
+MIDDLEWARE = []
+if settings.DEBUG:
+    MIDDLEWARE = [
+                     'django_browser_reload.middleware.BrowserReloadMiddleware',
+                 ] + MIDDLEWARE
 MIDDLEWARE = [
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,7 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware'
-]
+] + MIDDLEWARE
 
 if settings.DEBUG:
     MIDDLEWARE = [
@@ -164,7 +165,7 @@ STATIC_ROOT = 'static/'
 STATICFILES_STORAGE = 'pipeline.storage.PipelineManifestStorage'
 # URL pour accéder aux fichiers statiques et médias
 #STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/static/'
-STATIC_URL = "static/"
+STATIC_URL = "https://static.phraseart.org/"
 MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/media/'
 
 # Default primary key field type

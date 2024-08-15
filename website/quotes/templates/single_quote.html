@@ -170,10 +170,6 @@
         <!-- blockquote -->
         <!-- .post-tags -->
         <br/>
-
-
-
-
         </div>
         </div>
         <!-- post-slider -->
@@ -184,7 +180,7 @@
 
             {% for random_quote in random_quotes %}
                 <!-- post -->
-                <div class="post-thumbnail" style="background-image:url({% get_media_prefix %}{{ random_quote.tag_primary.image_1000_667 }})">
+                <div class="post-thumbnail" style="background-image:url({{ random_quote.file_image.file_thumbnail_1440_960.url }})">
                     <!-- .entry-header -->
                     <header class="entry-header">
                         <!-- .entry-meta -->
@@ -200,10 +196,10 @@
                         <!-- .entry-meta -->
                         <!-- .entry-title -->
                         <h2 class="entry-title"><a
-                                href="{% url 'quote' category_slug=random_quote.category.slug slug=random_quote.slug %}">{{ random_quote.title }}
+                                href="{% url 'quote' slug=random_quote.slug %}">{{ random_quote.title }}
                             ...</a>
                         </h2>
-                        <p><a href="{% url 'quote' category_slug=random_quote.category.slug slug=random_quote.slug %}" class="more-link">Lire</a>
+                        <p><a href="{% url 'quote' slug=random_quote.slug %}" class="more-link">Lire</a>
                         </p>
 
                     </header>
