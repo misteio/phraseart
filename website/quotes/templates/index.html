@@ -42,29 +42,12 @@
                             <h2><em>Phraseart</em></h2>
                             <h3>L'ordre des mots dans une <br/><b>phrase est art</b></h3>
                             <!-- .link-boxes -->
+                            {% for tag in popular_tags %}
                             <figure>
-                                <a href=""><img src=""
-                                                                                            alt="Citation"></a>
-                                <figcaption class="wp-caption-text">Citation</figcaption>
+                                <a href="{% url 'quote_tag_list' tag_slug=tag.slug %}"><img src="{{ tag.quote_tags.first.file_image.file_thumbnail_550_550.url }}" alt="{{ tag.name }}"></a>
+                                <figcaption class="wp-caption-text">{{ tag.name }}</figcaption>
                             </figure>
-
-                            <figure>
-                                <a href=""><img src=""
-                                                                                              alt="Parole"></a>
-                                <figcaption class="wp-caption-text">Parole</figcaption>
-                            </figure>
-
-                            <figure>
-                                <a href=""><img src="{% static "images/site/index/books.jpg" %}" alt="Livre"></a>
-                                <figcaption class="wp-caption-text">Livre</figcaption>
-                            </figure>
-
-                            <figure>
-                                <a href=""><img
-                                        src=""
-                                        alt="Proverbe"></a>
-                                <figcaption class="wp-caption-text">Proverbe</figcaption>
-                            </figure>
+                            {% endfor %}
                             <!-- .link-boxes -->
                         </div>
                         <!-- .entry-content -->

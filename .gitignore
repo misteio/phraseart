@@ -1,0 +1,5 @@
+/venv/
+/quote/
+/.idea/
+/website/db.sqlite3
+/website/.env

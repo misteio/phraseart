@@ -164,7 +164,6 @@ AWS_S3_ENDPOINT_URL = 'https://phraseart.s3.fr-par.scw.cloud'
 STATIC_ROOT = 'static/'
 STATICFILES_STORAGE = 'pipeline.storage.PipelineManifestStorage'
 # URL pour accéder aux fichiers statiques et médias
-#STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/static/'
 STATIC_URL = "https://static.phraseart.org/"
 MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/media/'
 

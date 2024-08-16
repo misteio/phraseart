@@ -3,7 +3,6 @@ from core.mixins import Timestamped
 from django.db import models
 from django.utils.text import slugify
 from imagekit.models import ProcessedImageField
-from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 import uuid
 from django.urls import reverse
@@ -134,7 +133,7 @@ class Quote(Timestamped):
     body = models.TextField()
     analyze = models.TextField(blank=True)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name='quote_tags')
     image_square = models.ImageField(blank=True, upload_to='images/generated/%Y/%m/%d/')
     image_vertical = models.ImageField(blank=True, upload_to='images/generated/%Y/%m/%d/')
     image_horizontal = models.ImageField(blank=True, upload_to='images/generated/%Y/%m/%d/')

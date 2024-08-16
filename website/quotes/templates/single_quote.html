@@ -4,21 +4,46 @@
 
 
 {% block 'header' %}
-    <meta name="description" content="Citation de {{ quote.author }} sur les thèmes {{ quote.tag_primary.name }},{% for tag in quote.tags.all %},{{ tag.name }}{% endfor %}">
-    <meta name="keywords" content="citation,{{ quote.author.name }},{% for tag in quote.tags.all %},{{ tag.name }}{% endfor %}">
+    <meta name="description" content="{{ quote.title }}... Citation de {{ quote.author }} sur les thèmes:{% for tag in quote.tags.all %}{% if forloop.first %}{% else %},{% endif %}{{ tag.name }}{% endfor %}.">
+    <meta name="keywords" content="{{ quote.author.slug }},{% for tag in quote.tags.all %}{% if forloop.first %}{% else %},{% endif %}{{ tag.name }}{% endfor %}">
     <meta name="author" content="Phraseart">
-    <title>{{ quote.author.name }} | {{ quote.title }}</title>
-    <meta property="og:description" content="Citation de {{ quote.author }} sur les thèmes {{ quote.tag_primary.name }},{% for tag in quote.tags.all %},{{ tag.name }}{% endfor %}">
+    <title>{{ quote.author.name }} | {{ quote.title }} ...</title>
     <meta property="og:type" content="article">
-    <meta property="og:title" content="{{ quote.author.name }} | {{ quote.title }}">
+    <meta property="og:title" content="Citation de {{ quote.author.name }} : {{ quote.title }} ...">
+    <meta property="og:description" content="{{ quote.title }}... Citation de {{ quote.author }} sur les thèmes:{% for tag in quote.tags.all %}{% if forloop.first %}{% else %},{% endif %}{{ tag.name }}{% endfor %}.">
     <meta property="og:image" content="{{ quote.image_square.url }}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1080">
+    <meta property="og:image:height" content="1080">
     <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
     <meta property="og:updated_time" content="{{ quote.updated_at|date:'c' }}">
-    <meta property="og:site_name" content="Phraseart : L'ordre des mots dans une phrase est art">
     <meta property="article:publisher" content="https://www.facebook.com/Phraseart-107583934183716">
-    <meta property="article:section" content="{{ quote.author }}">
+    <meta property="article:section" content="{{ quote.author.name }}">
+    <meta property="article:author" content="{{ quote.author.name }}">
     <meta property="article:published_time" content="{{ quote.created_at|date:'c' }}">
     <meta property="article:modified_time" content="{{ quote.updated_at|date:'c' }}">
+    <meta property="article:tag" content="{{ quote.author.slug }},{% for tag in quote.tags.all %}{% if forloop.first %}{% else %},{% endif %} {{ tag.name }}{% endfor %}">
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "{{quote.title}}",
+      "image": [
+        "{{ MEDIA_URL }}{{ quote.image_square }}"
+       ],
+      "description": "{{ quote.title}}... Citation de {{ quote.author }} sur les thèmes:{% for tag in quote.tags.all %}{% if forloop.first %}{% else %},{% endif %}{{ tag.name }}{% endfor %}.",
+      "thumbnailUrl": ["{{quote.file_image.file_thumbnail_1440_960.url}}"],
+      "datePublished": "{{ quote.created_at|date:'c' }}",
+      "dateModified": "{{ quote.updated_at|date:'c' }}",
+      "author": {
+          "@type": "Person",
+          "name": "{{ quote.author.name}}",
+          "url": "https://phraseart.org/citation/auteur/{{ quote.author.slug}}"
+      },
+      "inLanguage": "fr_FR",
+      "keywords": "{{ quote.author.slug }},{% for tag in quote.tags.all %}{% if forloop.first %}{% else %},{% endif %}{{ tag.name }}{% endfor %}"
+    }
+    </script>
 {% endblock %}
 
 {% block 'body' %}
@@ -30,8 +55,7 @@
         <!-- .entry-meta -->
         <div class="entry-meta">
                     <span class="entry-date" style="width: 40%">
-                        <time class="entry-date"
-                              datetime="{{ quote.created_at|date:'c' }}">{{ quote.created_at }}</time>
+                         <a href="{% url 'quote_author_list' author_slug=quote.author.slug %}" title="View all posts in Travel" rel="category tag">{{ quote.author.name }}</a>
                     </span>
             <span style="width: 55%; text-align: right"><a href="#download">Télécharger </a></span>
         </div>
@@ -54,11 +78,6 @@
                     <!-- .entry-meta -->
                     <!-- .entry-title -->
                     <h1 class="entry-title">{{ quote.body }}</h1>
-                    <div class="entry-meta">
-                            <span class="cat-links">
-                                <a href="#" title="View all posts in Travel" rel="category tag">{{ quote.author.name }}</a>
-                            </span>
-                    </div>
                     <!-- .entry-meta -->
                 </header>
                 <!-- .entry-header -->
@@ -95,7 +114,7 @@
                         Partager</i>
 
                         <a rel="nofollow" target="_blank"
-                           href="mailto:?subject=Citation du jour : {{ quote.title }}&amp;body={{ quote.title }} %0D%0A {{ request.build_absolute_uri }}. %0D%0A%0D%0A https://phraseart.com"
+                           href="mailto:?subject=Citation du jour : {{ quote.title }}&amp;body={{ quote.body }} %0D%0A {{ request.build_absolute_uri }}. %0D%0A%0D%0A https://phraseart.com"
                            title="Partager par email"><i class="pw-icon-mail"></i></a>
 
                         <a rel="nofollow" target="_blank"

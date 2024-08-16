@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 from django.template import RequestContext
 from django.views.decorators.http import require_http_methods
@@ -7,14 +6,17 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.views.decorators.cache import cache_page
 from .models import Quote,Tag, Author
+from django.db.models import Count
+from pprint import pprint
 
-
-# Create your views here.
 # @cache_page(60 * 90)
 @require_http_methods(["GET"])
 def index(request):
-    quotes = Quote.objects.all().order_by('-created_at')[:10]
-    return render(request, 'index.html', {'quotes': quotes})
+    quotes = Quote.objects.all().order_by('-created_at')[:5]
+    popular_tags = Tag.objects.annotate(count=Count('quote_tags')).order_by('-count')[:4]
+    pprint(popular_tags)
+
+    return render(request, 'index.html', {'quotes': quotes, 'popular_tags': popular_tags})
 
 
 @require_http_methods(["GET"])
